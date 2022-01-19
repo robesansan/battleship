@@ -26,16 +26,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .cell {
   cursor: pointer;
   height: 30px;
   background-color: blue;
-}
-.ship {
-  background-color: #000;
-}
-.hit {
-  background-color: red;
+
+  &.ship {
+    background-color: #000;
+  }
+  &.hit {
+    background-color: red;
+    cursor: default;
+  }
 }
 </style>
