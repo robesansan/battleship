@@ -6,7 +6,9 @@
         v-for="c in r"
         :key="c.id"
         :cell-data="c"
+        :blocked="blocked"
         @hit="hitShip"
+        @miss="missClick"
       />
     </div>
   </div>
@@ -25,6 +27,7 @@ export default {
   props: {
     size: Number,
     player: Number,
+    playing: Number,
   },
   components: {
     Cell,
@@ -64,6 +67,7 @@ export default {
           y,
           ship: null,
           hit: false,
+          tried: false,
         });
       }
     }
@@ -123,6 +127,21 @@ export default {
 
     hitShip(cellData) {
       this.rows[cellData.x][cellData.y].hit = true;
+      this.rows[cellData.x][cellData.y].tried = true;
+
+      this.$emit("change-player");
+    },
+
+    missClick(cellData) {
+      this.rows[cellData.x][cellData.y].tried = true;
+
+      this.$emit("change-player");
+    },
+  },
+
+  computed: {
+    blocked() {
+      return this.player != this.playing;
     },
   },
 };

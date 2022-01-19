@@ -1,10 +1,9 @@
 <template>
-  <div @click="clickCell">
-    <div
-      class="cell"
-      v-if="cellData.ship"
-      :class="{ ship: cellData.ship, hit: cellData.hit }"
-    ></div>
+  <div>
+    <div v-if="cellData.hit" class="cell hit-cell"></div>
+    <div v-else-if="cellData.tried" class="cell tried-cell"></div>
+    <div v-else-if="blocked" class="cell blocked-cell"></div>
+    <div v-else class="cell clickable-cell" @click="clickCell"></div>
   </div>
 </template>
 
@@ -13,13 +12,14 @@ export default {
   name: "Cell",
   props: {
     cellData: Object,
+    blocked: Boolean,
   },
   methods: {
     clickCell() {
       if (this.cellData.ship) {
         this.$emit("hit", this.cellData);
       } else {
-        console.log("MISS");
+        this.$emit("miss", this.cellData);
       }
     },
   },
@@ -28,16 +28,33 @@ export default {
 
 <style lang="scss" scoped>
 .cell {
-  cursor: pointer;
   height: 30px;
-  background-color: blue;
 
-  &.ship {
-    background-color: #000;
-  }
-  &.hit {
-    background-color: red;
+  .blocked-cell {
+    background-color: #fff;
     cursor: default;
+  }
+
+  .hit-cell {
+    background-color: #000;
+    cursor: default;
+  }
+
+  .tried-cell {
+    background-color: blue;
+  }
+
+  .clickable-cell {
+    cursor: pointer;
+    background-color: grey;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    /* &.ship {
+      background-color: #000;
+    } */
   }
 }
 </style>

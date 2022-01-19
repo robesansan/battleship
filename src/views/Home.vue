@@ -1,9 +1,26 @@
 <template>
   <div class="home">
+    <h1>Battleship</h1>
     <table>
       <tr>
-        <td><grid :size="8" :player="1" /></td>
-        <td><grid :size="8" :player="2" /></td>
+        <td>
+          <h2>Player 1</h2>
+          <grid
+            :size="8"
+            :player="1"
+            :playing="playing"
+            @change-player="changePlayer"
+          />
+        </td>
+        <td>
+          <h2>Player 2</h2>
+          <grid
+            :size="8"
+            :player="2"
+            :playing="playing"
+            @change-player="changePlayer"
+          />
+        </td>
       </tr>
     </table>
   </div>
@@ -18,8 +35,19 @@ export default {
   components: {
     Grid,
   },
+  data() {
+    return {
+      playing: 1,
+    };
+  },
 
   created() {},
+
+  methods: {
+    changePlayer() {
+      this.playing = (this.playing++ % 2) + 1;
+    },
+  },
 };
 </script>
 
