@@ -53,6 +53,8 @@ export default {
           size: 5,
         },
       ],
+      cellsWithShip: 0,
+      cellsWithHitShip: 0,
     };
   },
   created() {
@@ -84,6 +86,7 @@ export default {
         counter++;
       } while (!this.checkAllowShip(ship) && counter < 10);
 
+      this.cellsWithShip += ship.size;
       this.putShip(ship);
     });
 
@@ -129,7 +132,13 @@ export default {
       this.rows[cellData.x][cellData.y].hit = true;
       this.rows[cellData.x][cellData.y].tried = true;
 
-      this.$emit("change-player");
+      this.cellsWithHitShip++;
+
+      if (this.cellsWithShip == this.cellsWithHitShip) {
+        this.$emit("win-player", this.player);
+      } else {
+        this.$emit("change-player");
+      }
     },
 
     missClick(cellData) {
