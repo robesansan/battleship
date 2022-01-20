@@ -39,18 +39,26 @@ export default {
         {
           id: 1,
           size: 2,
+          numHits: 0,
+          sunken: false,
         },
         {
           id: 2,
           size: 3,
+          numHits: 0,
+          sunken: false,
         },
         {
           id: 3,
           size: 4,
+          numHits: 0,
+          sunken: false,
         },
         {
           id: 4,
           size: 5,
+          numHits: 0,
+          sunken: false,
         },
       ],
       cellsWithShip: 0,
@@ -133,6 +141,12 @@ export default {
       this.rows[cellData.x][cellData.y].tried = true;
 
       this.cellsWithHitShip++;
+
+      let currentShip = this.ships.find((ship) => ship.id == cellData.ship.id);
+      currentShip.numHits++;
+      if (currentShip.size == currentShip.numHits) {
+        currentShip.sunken = true;
+      }
 
       if (this.cellsWithShip == this.cellsWithHitShip) {
         this.$emit("win-player", this.player);

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div v-if="cellData.hit" class="cell hit-cell"></div>
+    <div
+      v-if="cellData.hit"
+      class="cell hit-cell"
+      :class="{ sunken: cellData.ship.sunken }"
+    ></div>
     <div v-else-if="cellData.tried" class="cell tried-cell"></div>
     <div v-else-if="blocked" class="cell blocked-cell"></div>
     <div v-else class="cell clickable-cell" @click="clickCell"></div>
@@ -38,6 +42,10 @@ export default {
   .hit-cell {
     background-color: #000;
     cursor: default;
+
+    &.sunken {
+      background-color: red;
+    }
   }
 
   .tried-cell {
@@ -51,10 +59,6 @@ export default {
     &:hover {
       opacity: 0.5;
     }
-
-    /* &.ship {
-      background-color: #000;
-    } */
   }
 }
 </style>
