@@ -92,7 +92,7 @@ export default {
         ship.x = this.getRandomInt(0, this.size - ship.size);
         ship.y = this.getRandomInt(0, this.size - ship.size);
         counter++;
-      } while (!this.checkAllowShip(ship) && counter < 10);
+      } while (!this.checkAllowShip(ship) && counter < 100);
 
       this.cellsWithShip += ship.size;
       this.putShip(ship);
